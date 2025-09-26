@@ -1,0 +1,50 @@
+---
+- name: Configure Kubernetes nodes
+  hosts: k8s-nodes
+  become: true
+  tasks:
+    - name: Update apt cache (Ubuntu/Debian)
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Install basic packages
+      package:
+        name:
+          - git
+          - curl
+          - vim
+        state: present
+
+    - name: Ensure Docker is installed
+      package:
+        name: docker.io
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Start & enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+- name: Deploy sample application
+  hosts: k8s-nodes
+  become: true
+  tasks:
+    - name: Create app directory
+      file:
+        path: /opt/myapp
+        state: directory
+        mode: '0755'
+
+    - name: Copy app index.html
+      copy:
+        dest: /opt/myapp/index.html
+        content: |
+          <h1>Hello from Jenkins + Ansible on Kubernetes!</h1>
+
+    - name: Start simple HTTP server (Python3)
+      shell: nohup python3 -m http.server 8080 --directory /opt/myapp &
+      args:
+        executable: /bin/bash

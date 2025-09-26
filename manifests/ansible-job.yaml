@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ansible-job
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - name: ansible
+        image: cytopia/ansible:latest   # lightweight Ansible image
+        command: ["/bin/sh", "-c"]
+        args:
+          - ansible-playbook -i /etc/ansible/hosts.ini /ansible/playbooks/site.yml
+        volumeMounts:
+          - name: ansible-playbooks
+            mountPath: /ansible/playbooks
+          - name: ansible-inventory
+            mountPath: /etc/ansible
+      restartPolicy: Never
+      volumes:
+        - name: ansible-playbooks
+          configMap:
+            name: ansible-playbooks-cm
+        - name: ansible-inventory
+          configMap:
+            name: ansible-inventory-cm
+  backoffLimit: 1

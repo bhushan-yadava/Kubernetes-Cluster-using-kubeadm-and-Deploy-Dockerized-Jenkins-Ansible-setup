@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ansible-playbooks-cm
+data:
+  site.yml: |
+    ---
+    - name: Configure Kubernetes nodes
+      hosts: k8s-nodes
+      become: true
+      tasks:
+        - name: Install basic packages
+          package:
+            name:
+              - git
+              - curl
+            state: present

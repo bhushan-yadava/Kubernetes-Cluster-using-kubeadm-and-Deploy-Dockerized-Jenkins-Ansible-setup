@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ansible-inventory-cm
+data:
+  hosts.ini: |
+    [k8s-nodes]
+    node1 ansible_host=10.0.0.11 ansible_user=ubuntu
+    node2 ansible_host=10.0.0.12 ansible_user=ubuntu
