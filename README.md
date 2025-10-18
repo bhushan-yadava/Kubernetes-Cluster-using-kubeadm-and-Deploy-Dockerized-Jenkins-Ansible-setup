@@ -6,6 +6,8 @@ This project demonstrates how to manually create a Kubernetes cluster using kube
 
 It’s a practical DevOps setup where Jenkins pipelines can trigger Ansible playbooks to configure or deploy workloads onto your cluster nodes.
 
+
+
 📌 Project Structure
 k8s-jenkins-ansible/
 │── Dockerfile.ansible              # Custom Ansible container image
