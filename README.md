@@ -59,6 +59,7 @@ net.bridge.bridge-nf-call-iptables  = 1
 EOF
 sudo sysctl --system
 
+
 Install runtime + kubeadm + kubelet + kubectl:
 # containerd
 sudo apt update && sudo apt install -y containerd
