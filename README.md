@@ -1,6 +1,7 @@
 🚀 Kubernetes Cluster with Jenkins + Ansible (via kubeadm)
 
 
+
 This project demonstrates how to manually create a Kubernetes cluster using kubeadm, and then deploy a Dockerized Jenkins + Ansible setup on top of the cluster to automate deployments across nodes.
 
 
